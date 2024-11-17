@@ -11,59 +11,65 @@ app = Flask(__name__)
 @app.route("/")
 def index():
 
-    return render_template("index.html")
+    return render_template("index .html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    if request.method == "POST":
+    session.clear()
+    if request.method == "GET":
+        return render_template("login.html")
+    else:
         correo = request.form.get("correo")
-        password = generate_password_hash("password")
+        password = request.form.get("password")
         if not correo or not password:
-            return render_template("login.html", error="Campos incompletos.")
+            return render_template("login.html", message="Campos incompletos.")
         cur.execute("SELECT * FROM huesped WHERE correo = ? AND hash = ?", (correo, password))
         user = cur.fetchone()
-        conn.close()
+        
+        if user:
+             return redirect('/')
+        else:
+             return render_template("login.html", message="Usuario no encontrado.")
 
-    if user and check_password_hash(user["hash"], password):
-            session["correo"] = user["correo"]
-            return render_template("index.html", user=user)
-    else:
-        return render_template("login.html", error="Correo o contraseña incorrectos.")
-
-    return redirect("/")
+    return redirect('/')
 
 @app.route("/register", methods = ["GET", "POST"])
 def register():
-     
-     if request.method == "POST":
-          nombre = request.form.get("Nombre")
-          apellido = request.form.get("Apellido")
-          telefono = request.form.get("Numero telefónico")
-          correo = request.form.get("correo")
-          password = generate_password_hash("password")
+     if request.method == "GET":
 
-          if not nombre or not apellido or not telefono or not correo or not password:
-               return render_template("/register.html", error = "Campos obligatorios incompletos.")
-          cur.execute("INSERT INTO huesped WHERE nombre = ? AND apellido = ? AND telefono = ? AND correo = ? AND hash = ?" (nombre, apellido, telefono, correo, password))
-          user = cur.fetchone()
-          conn.close()
+          return render_template("register.html")
      
-     return redirect("/")
+     else:
+          name = request.form.get("Nombre")
+          correo = request.form.get("Correo electrónico")
+          password = generate_password_hash("Password")
+          password2 = generate_password_hash("Confirm Password")
+
+          if password != password2:
+               return render_template("register.html", message = "Las contraseñas no coinciden")
+          cur.execute("INSERT * INTO huesped (nombre, correo, password) VALUES (?, ?, ?)", (name, correo, password))
+          conn.commit()
+          return redirect('/')
 
 @app.route("/employeelogin", methods = ["POST", "GET"])
 def employeelogin():
-     if request.method == "POST":
-        staffcode = request.form.get("Codigo de Staff")
-        correo = request.form.get("Correo")
-        password = generate_password_hash("Contraseña")
-
-        if not staffcode or not correo or not password:
-             return render_template("employeelogin", error = "Campos obligatorios incompletos.")
-        cur.execute("SELECT * FROM empleados where id = ? AND correo = ? AND hash = ?" (staffcode, correo, password))
-        user = cur.fetchone()
-        conn.close()
-        
-        return redirect("/")
+     session.clear()
+     if request.method == "GET":
+          return render_template("employeelogin.html")
+     else:
+          codigo = request.form.get("Código empleado")
+          correo = request.form.get("Correo")
+          password = request.form.get("Contraseña")
+          if not codigo or not correo or not password:
+               return render_template("/employeelogin", message = "Campos incompletos.")
+          cur.execute("SELECT * FROM empleados WHERE id  = ? AND correo = ? AND hash = ?", (codigo, correo, password))
+          user = cur.fetchone()
+          if user:
+               return redirect('/')
+          else:
+               return render_template("employeelogin.html", message = "Campos incorrectos.")
+          
+     return redirect('/')
      
 @app.route("/logout")
 def logout():
