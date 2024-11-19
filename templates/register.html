@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>Registro</h1>
+        
+        <!-- Si se recibe un mensaje de error se muestra en el html -->
+        {% if message %}
+            <p>{{ message }}</p>
+        {% endif %}
+
+        <form method="post" action="/register">
+            <div>
+                <input type="text" name="Nombre" required>
+                <label>Nombre de usuario</label>
+            </div>
+            <div>
+                <input type="text" name="Correo electrónico" required>
+                <label>Correo</label>
+            </div>
+            <div>
+                <input type="password" name="Password" required>
+                <label>Contraseña</label>
+            </div>
+            <div>
+                <input type="password" name="ConfirmPassword" required>
+                <label>Repetir contraseña</label>
+            </div>
+            <div>
+                <input type="text" name="cedula" required>
+                <label>Cedula de identidad</label>
+            </div>
+            <div>
+                <input type="text" name="telefono" required>
+                <label>Telefono</label>
+            </div> 
+            <input type="submit" value="Registrarse">
+        </form>
+    </div>
+</body>
+</html>
