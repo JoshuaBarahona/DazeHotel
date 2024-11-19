@@ -1,4 +1,5 @@
 *.sqlite
 *.sqlite3
 
-venv/
+/venv
+/.vscode
