@@ -37,9 +37,10 @@ def login():
             # Los datos se recuperan en forma de tupla
             cur.execute("SELECT * FROM huesped WHERE correo = ?", (correo,))
             user = cur.fetchone()
-            if user and check_password_hash(user[1], password):
+            if user and check_password_hash(user[5], password):
                 # Guarda el id del usuario en la sesión
                 session["user_id"] = user[0]
+                
                 return redirect('/')
             else:
                 return render_template("index .html", message="Usuario no encontrado.")
@@ -47,7 +48,7 @@ def login():
         elif user_type == "Iniciar como empleado":
             cur.execute("SELECT * FROM empleados WHERE correo = ?", (correo,))
             user = cur.fetchone()
-            if user and check_password_hash(user[3], password):
+            if user and check_password_hash(user[6], password):
                 session["employee_id"] = user[0]
                 return redirect('/')
             else:
