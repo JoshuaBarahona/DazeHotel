@@ -114,9 +114,28 @@ def aboutus():
 def galery():
     return render_template("galery.html")
 
-@app.route("/habitaciones")
+@app.route("/habitaciones", methods = ["POST", "GET"])
 def habitaciones():
-    return render_template("habitaciones.html")
+    if request.method == "GET":
+        return render_template("habitaciones.html")
+    elif request.method == "POST":
+        cur.execute("SELECT * FROM categoria WHERE nombre = ?", (categoria))
+        categoria = cur.fetchall()
+        return render_template("habitaciones.html")
+    
+@app.route("/habitaciones/<int:categoria_id>", methods = ["GET", "POST"])
+def habitacionesdetalles(categoria_id):
+    if request.method == "GET":
+        # Muestra detalles de habitaciones de una categoría específica.
+        cur.execute("SELECT * FROM habitacion WHERE categoria_id = ?", (categoria_id,))
+        habitaciones = cur.fetchall()
+        return render_template("habitaciones.html", categoria_id=categoria_id, habitaciones=habitaciones)
+    elif request.method == "POST":
+        # Procesa el formulario para agregar una habitación.
+        detalle = request.form.get("Detalle")
+        cur.execute("INSERT INTO habitacion(detalle) VALUES (?)", (detalle))
+        conn.commit()
+        return redirect("/")
 
 @app.route("/contacto")
 def contacto():
