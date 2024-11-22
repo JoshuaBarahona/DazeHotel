@@ -1,46 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <div>
-        <h1>Registro</h1>
-        
-        <!-- Si se recibe un mensaje de error se muestra en el html -->
-        {% if message %}
-            <p>{{ message }}</p>
-        {% endif %}
+{% extends 'layout.html' %}
 
-        <form method="post" action="/register">
-            <div>
-                <input type="text" name="Nombre" required>
-                <label>Nombre de usuario</label>
-            </div>
-            <div>
-                <input type="text" name="Correo electrónico" required>
-                <label>Correo</label>
-            </div>
-            <div>
-                <input type="password" name="Password" required>
-                <label>Contraseña</label>
-            </div>
-            <div>
-                <input type="password" name="ConfirmPassword" required>
-                <label>Repetir contraseña</label>
-            </div>
-            <div>
-                <input type="text" name="cedula" required>
-                <label>Cedula de identidad</label>
-            </div>
-            <div>
-                <input type="text" name="telefono" required>
-                <label>Telefono</label>
-            </div> 
-            <input type="submit" value="Registrarse">
-        </form>
-    </div>
-</body>
-</html>
+{% block head %}
+<link rel="stylesheet" href="\static\register.css">
+{% endblock %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="formulario">
+    <h1>Registrate!</h1>
+    <form method="post" action="/register">
+        <img src="/static/img/logo.png" alt="" srcset="">
+        <div class="username">
+            <input type="text" name="Nombre" required>
+            <label>Nombre de usuario</label>
+        </div>
+        <div class="username">
+            <input type="text"  name="Correo electrónico" required>
+            <label>Correo electronico</label>
+        </div>
+        <div class="username">
+            <input type="text" name="cedula" required>
+            <label>Cedula de identidad</label>
+        </div>
+        <div class="username">
+            <input type="text" name="telefono" required>
+            <label>Numero de telefono</label>
+        </div>
+        <div class="username">
+            <input type="password" name="Password" required>
+            <label>Contraseña</label>
+        </div>
+        <div class="username">
+            <input type="password" name="ConfirmPassword" required>
+            <label>Confirmar Contraseña</label>
+        </div>
+        <div class="registrarse">
+            <input type="submit" value="Crear cuenta">
+            ¿Ya tienes una cuenta Existente?<a href="http://127.0.0.1:5000/login">Inicia sesion!</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

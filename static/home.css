@@ -256,6 +256,7 @@ footer{
     overflow: hidden;
 }
 
+
 .contenedor-footer{
     display: flex;
     width: 90%;
@@ -435,6 +436,7 @@ footer{
     .accordion-button{
         margin-bottom: 10px;
     }
+
     .accordion-body {
         margin-top: 15px;
         padding: 25px;
@@ -443,6 +445,7 @@ footer{
         box-shadow: 0 2px 25px -3px rgba(0, 0, 0, 0.1);
         margin-bottom: 10px;
     }
+
     
     .circle-icon {
         height: 50px;

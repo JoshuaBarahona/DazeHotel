@@ -1,121 +1,54 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends 'layout.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>About us</title>
-    <link rel="stylesheet" href="\DazeHotel\static\About.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800&display=swap" rel="stylesheet"> 
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-              <img src="\DazeHotel\static\img\logo.png" alt="logoxd" 
-                  style="width: 70px; height: 70px; border-radius: 50%;">
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Inicio</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Galeria</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Conocenos</a>
-                  </li>
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Habitaciones
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Habitaciones sencillas</a></li>
-                      <li><a class="dropdown-item" href="#">Habitaciones de Lujo</a></li>
-                      <li><hr class="dropdown-divider"></li>
-                      <li><a class="dropdown-item" href="#">Ver todas las Habitaciones</a></li>
-                    </ul>
-                  </li>
-                  
-                </ul>
-                <form class="d-flex" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-              </div>
-            </div>
-          </nav> 
-        <section class="textos-header">
-            <h1>Acerca de nosotros</h1>
-            <h2>conoce sobre DazeValley</h2>
-        </section>
-        <div class="wave" style="height: 150px; overflow: hidden;"><svg viewBox="0 0 500 150" preserveAspectRatio="none"
-                style="height: 100%; width: 100%;">
-                <path d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-                    style="stroke: none; fill: #fff;"></path>
-            </svg></div>
-    </header>
-    <main>
-        <section class="contenedor sobre-nosotros">
-            <h2 class="titulo"></h2>
-            <div class="contenedor-sobre-nosotros">
-                <img src="\DazeHotel\static\img\habitacionlujosa1.jpg" alt="" class="imagen-about-us">
-                <div class="contenido-textos">
-                    <p>Bienvenido al Daze Valley Hotel, tu oasis de tranquilidad a un paso del corazón de Managua. ofrecemos un refugio perfecto para quienes buscan relajarse y rejuvenecer. Nuestro hotel combina el encanto de la naturaleza con el confort moderno, 
-                        creando un ambiente ideal para escapadas románticas, vacaciones en familia o viajes de negocios. En Daze Valley, nos enorgullece brindar una experiencia inolvidable a cada uno de nuestros huéspedes, con servicios excepcionales y atención personalizada.</p>
-                </div>
-            </div>
-        </section>
-        <section class="about-services">
-            <div class="contenedor">
-                <h2 class="titulo">Nuestros servicios</h2>
-                <div class="servicio-cont">
-                    <div class="servicio-ind">
-                        <img src="\DazeHotel\static\img\restaurante.png" alt="">
-                        <h3>Restaurante</h3>
-                        <p>contamos con servicio buffet y restaurante para nuestro clientes, deguste nuestro sazon exclusivo de DazeValley</p>
-                    </div>
-                    <div class="servicio-ind">
-                        <img src="\DazeHotel\static\img\piscina.png" alt="">
-                        <h3>Piscina</h3>
-                        <p>Contamos con servicio de piscina para nuestros</p>
-                    </div>
-                    <div class="servicio-ind">
-                        <img src="\DazeHotel\static\img\wifi.png" alt="">
-                        <h3>WI-FI</h3>
-                        <p>Servicios de internet en las instalaciones y habitaciones del hotel</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-    <footer>
-        <div class="contenedor-footer">
-            <div class="content-foo">
-                <h4>Phone</h4>
-                <p>8296312</p>
-            </div>
-            <div class="content-foo">
-                <h4>Dazevalleyhotel</h4>
-                <p>&copy;2024</p>
-            </div>
-            <div class="content-foo">
-                <h4>Email</h4>
-                <p>DazeValley2024@bussiness.ni</p>
-            </div>
-            <div class="content-foo">
-                <h4>Managua Nicaragua</h4>
-                <p>8296312</p>
-            </div>
-        </div>
-        <h2 class="titulo-final">&copy; DazeValley Hotel | El paraiso vacacional que necesitas</h2>
-    </footer>
-</body>
+{% block title %}About us{% endblock %}
 
-</html>
+{% block head %}
+<link rel="stylesheet" href="\static\About.css">
+{% endblock %}
+
+{% block header %}
+<section class="textos-header">
+  <h1>Acerca de nosotros</h1>
+  <h2>conoce sobre DazeValley</h2>
+</section>
+<div class="wave" style="height: 150px; overflow: hidden;"><svg viewBox="0 0 500 150" preserveAspectRatio="none"
+      style="height: 100%; width: 100%;">
+      <path d="M0.00,49.98 C150.00,150.00 349.20,-50.00 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+          style="stroke: none; fill: #fff;"></path>
+  </svg></div>
+{% endblock %}
+
+{% block content %}
+<section class="contenedor sobre-nosotros">
+  <h2 class="titulo"></h2>
+  <div class="contenedor-sobre-nosotros">
+      <img src="\static\img\habitacionlujosa1.jpg" alt="" class="imagen-about-us">
+      <div class="contenido-textos">
+          <p>Bienvenido al Daze Valley Hotel, tu oasis de tranquilidad a un paso del corazón de Managua. ofrecemos un refugio perfecto para quienes buscan relajarse y rejuvenecer. Nuestro hotel combina el encanto de la naturaleza con el confort moderno, 
+              creando un ambiente ideal para escapadas románticas, vacaciones en familia o viajes de negocios. En Daze Valley, nos enorgullece brindar una experiencia inolvidable a cada uno de nuestros huéspedes, con servicios excepcionales y atención personalizada.</p>
+      </div>
+  </div>
+</section>
+<section class="about-services">
+  <div class="contenedor">
+      <h2 class="titulo">Nuestros servicios</h2>
+      <div class="servicio-cont">
+          <div class="servicio-ind">
+              <img src="\static\img\restaurante.png" alt="">
+              <h3>Restaurante</h3>
+              <p>contamos con servicio buffet y restaurante para nuestro clientes, deguste nuestro sazon exclusivo de DazeValley</p>
+          </div>
+          <div class="servicio-ind">
+              <img src="\static\img\piscina.png" alt="">
+              <h3>Piscina</h3>
+              <p>Contamos con servicio de piscina para nuestros</p>
+          </div>
+          <div class="servicio-ind">
+              <img src="\static\img\wifi.png" alt="">
+              <h3>WI-FI</h3>
+              <p>Servicios de internet en las instalaciones y habitaciones del hotel</p>
+          </div>
+      </div>
+  </div>
+</section>
+{% endblock %}

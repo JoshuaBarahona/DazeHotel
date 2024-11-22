@@ -18,13 +18,17 @@ app.secret_key = "una_clave_secreta_super_segura"
 
 @app.route("/")
 def index():
-    return render_template("index .html")
+    # Esto es para meter un admin por defecto en la base de datos para testear el login de empleado
+    # correo: adiliamoreno@gmail.com  contraseña: admin
+    # cur.execute("INSERT INTO empleados(nombre, area_id, correo, telefono, cedula, hash) VALUES ('admin', 1, 'adiliamoreno@gmail.com', 12345678, 12345678, ?)", (generate_password_hash("admin"),))
+    # conn.commit()
+    return render_template("index.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
     session.clear()
     if request.method == "GET":
-        return render_template("index .html")
+        return render_template("login.html")
     else:
         correo = request.form.get("correo")
         password = request.form.get("password")
@@ -50,16 +54,22 @@ def login():
             user = cur.fetchone()
             if user and check_password_hash(user[6], password):
                 session["employee_id"] = user[0]
-                return redirect('/')
+                return redirect('/admin')
             else:
                 return render_template("index .html", message="Usuario no encontrado.")
         
-        
+
+@app.route("/admin", methods=["GET", "POST"])
+def admin():
+    if request.method == "GET":
+        return render_template("admin.html")
+    
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
-        return render_template("register.html")
+        return render_template("Register.html")
     else:
         name = request.form.get("Nombre")
         correo = request.form.get("Correo electrónico")
@@ -69,9 +79,9 @@ def register():
         telefono = request.form.get("telefono")
 
         if password != password2:
-            return render_template("register.html", message="Las contraseñas no coinciden")
+            return render_template("Register.html", message="Las contraseñas no coinciden")
         if not name or not correo or not password:
-            return render_template("register.html", message="Campos incompletos.")
+            return render_template("Register.html", message="Campos incompletos.")
         
         # Encriptar la contraseña antes de guardarla
         hashed_password = generate_password_hash(password)
@@ -82,25 +92,6 @@ def register():
         conn.commit()
         return redirect('/')
 
-@app.route("/employeelogin", methods=["POST", "GET"])
-def employeelogin():
-    session.clear()
-    if request.method == "GET":
-        return render_template("employeelogin.html")
-    else:
-        codigo = request.form.get("Código empleado")
-        correo = request.form.get("Correo")
-        password = request.form.get("Contraseña")
-        if not codigo or not correo or not password:
-            return render_template("employeelogin.html", message="Campos incompletos.")
-        cur.execute("SELECT * FROM empleados WHERE id = ? AND correo = ?", (codigo, correo))
-        user = cur.fetchone()
-        if user and check_password_hash(user[3], password):  # Asegúrate que `user[3]` es el hash
-            session["employee_id"] = user[0]
-            return redirect('/')
-        else:
-            return render_template("employeelogin.html", message="Campos incorrectos.")
-
 @app.route("/logout")
 def logout():
     session.clear()
@@ -110,18 +101,15 @@ def logout():
 def aboutus():
     return render_template("acercade.html")
 
-@app.route("/galery")
-def galery():
-    return render_template("galery.html")
-
 @app.route("/habitaciones", methods = ["POST", "GET"])
 def habitaciones():
     if request.method == "GET":
         return render_template("habitaciones.html")
-    elif request.method == "POST":
-        cur.execute("SELECT * FROM categoria WHERE nombre = ?", (categoria))
-        categoria = cur.fetchall()
-        return render_template("habitaciones.html")
+    # elif request.method == "POST":
+    #     # esta ruta no deberia recibir post
+    #     cur.execute("SELECT * FROM categoria WHERE nombre = ?", (categoria))
+    #     categoria = cur.fetchall()
+    #     return render_template("habitaciones.html")
     
 @app.route("/habitaciones/<int:categoria_id>", methods = ["GET", "POST"])
 def habitacionesdetalles(categoria_id):
@@ -137,9 +125,7 @@ def habitacionesdetalles(categoria_id):
         conn.commit()
         return redirect("/")
 
-@app.route("/contacto")
-def contacto():
-    return render_template("contacto.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
