@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria</title>
+    <link rel="stylesheet" href="\DazeHotel\static\galeria.css">
+</head>
+<body>
+    <header>
+        <h1>Galeria de DazeValley</h1>
+    </header>
+    <main>
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item"><img src="\DazeHotel\static\img\piscinas.jpg" alt="Vista del hotel"></div>
+                <div class="carousel-item"><img src="\DazeHotel\static\img\habitacionlujosa1.jpg" alt="Habitación de lujo"></div>
+                <div class="carousel-item"><img src="\DazeHotel\static\img\piscina-galeria.webp" alt="Piscina"></div>
+                <div class="carousel-item"><img src="\DazeHotel\static\img\restaurantes.jpg" alt="Restaurante"></div>
+            </div>
+            <a href="#" class="carousel-control prev" aria-label="Imagen anterior">&lt;</a>
+            <a href="#" class="carousel-control next" aria-label="Imagen siguiente">&gt;</a>
+        </div>
+
+        <div class="gallery">
+            <a href="galeria-estandar.html" class="gallery-item">
+                <img src="\DazeHotel\static\img\habitacionsencilla1.jpg" alt="Habitación estándar">
+                <div class="gallery-item-info">
+                    <h3>habitacion Individual</h3>
+                    <p>Cómoda y acogedora para una estancia perfecta.</p>
+                </div>
+            </a>
+            <a href="galeria-lujo.html" class="gallery-item">
+                <img src="\DazeHotel\static\img\habitacionlujosa2.jpg" alt="Suite de lujo">
+                <div class="gallery-item-info">
+                    <h3>Suite de Lujo</h3>
+                    <p>Espaciosa y elegante con vistas panorámicas.</p>
+                </div>
+            </a>
+            <a href="galeria-restaurante.html" class="gallery-item">
+                <img src="\DazeHotel\static\img\Comidarestaurante.jpg" alt="Restaurante gourmet">
+                <div class="gallery-item-info">
+                    <h3>Restaurante Gourmet</h3>
+                    <p>Delicias culinarias para todos los gustos.</p>
+                </div>
+            </a>
+            <a href="galeria-spa.html" class="gallery-item">
+                <img src="\DazeHotel\static\img\piscina-galeria.webp" alt="Spa y bienestar">
+                <div class="gallery-item-info">
+                    <h3>Piscina del Hotel</h3>
+                    <p>Relájate y toma el Sol en nuestras instalaciones.</p>
+                </div>
+            </a>
+        </div>
+
+        <a href="#" class="cta-button">Reserva Ahora</a>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('.carousel-inner');
+            const items = carousel.querySelectorAll('.carousel-item');
+            const totalItems = items.length;
+            let currentIndex = 0;
+
+            function moveToNextSlide() {
+                currentIndex = (currentIndex + 1) % totalItems;
+                updateCarousel();
+            }
+
+            function moveToPrevSlide() {
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                updateCarousel();
+            }
+
+            function updateCarousel() {
+                carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            document.querySelector('.carousel-control.next').addEventListener('click', function(e) {
+                e.preventDefault();
+                moveToNextSlide();
+            });
+
+            document.querySelector('.carousel-control.prev').addEventListener('click', function(e) {
+                e.preventDefault();
+                moveToPrevSlide();
+            });
+
+            // Auto-advance the carousel every 5 seconds
+            setInterval(moveToNextSlide, 5000);
+        });
+    </script>
+</body>
+</html>
