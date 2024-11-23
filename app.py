@@ -57,14 +57,6 @@ def login():
                 return redirect('/admin')
             else:
                 return render_template("index .html", message="Usuario no encontrado.")
-        
-
-@app.route("/admin", methods=["GET", "POST"])
-def admin():
-    if request.method == "GET":
-        return render_template("admin.html")
-    
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -124,8 +116,78 @@ def habitacionesdetalles(categoria_id):
         cur.execute("INSERT INTO habitacion(detalle) VALUES (?)", (detalle))
         conn.commit()
         return redirect("/")
+    
+@app.route("/admin", methods = ["GET", "POST"])
+def admin():
+    if request.method == "GET":
+        cur.execute("SELECT * FROM reserva WHERE id = ? AND date = ? AND costo = ? AND huesped_id = ?")
+        cur.fetchall()
+        cur.execute("SELECT * FROM huesped WHERE id = ? AND nombre = ? AND cedula = ? AND telefono = ? AND correo = ? AND hash = ?")
+        cur.fetchall()
+        cur.execute("SELECT * FROM habitacion WHERE id = ? AND numero = ? AND piso = ? AND cant_max_huespedes = ? AND disponibilidad = ? AND costo_dia = ? AND detalle = ? AND categoria_id = ?")
+        cur.fetchall()
+        return render_template("admin.html")
+    else:
+        action_type = request.form.get("action_type")
+        if action_type == "Nueva reserva":
+            Cliente = request.form.get("Cliente")
+            Habitacion = request.form.get("Habitacion")
+            Fecha = request.form.get("Fecha")
+            Costo = request.get.form("Costo")
+            huesped_id = request.get.form("id del huesped")
+            cur.execute("INSERT * INTO reserva (id, date, costo, huesped_id) VALUES (?, ?, ?, ?)", Cliente, Habitacion, Fecha, Costo, huesped_id)#insert
+            conn.commit()
+        elif action_type == "Nueva habitación":
+            aydi = request.form.get("ID habitación")
+            numero = request.form.get("numero de habitacion")
+            piso = request.form.get("numero de piso")
+            cantmaxhuespedes = request.form.get("capacidad máxima de personas")
+            disponibilidad = request.form.get("¿Disponible?")
+            costonoche = request.form.get("Costo habitación")
+            cur.execute("INSERT INTO habitacion (id, numero, piso, cant_max_huespedes, disponibilidad, costo_dia) VALUES (?, ?, ?, ?, ?, ?)", aydi, numero, piso, cantmaxhuespedes, disponibilidad, costonoche)#inset
+            conn.commit()
+        elif action_type == "Eliminar":
+            habitacion_id = request.form.get("HabitacionID")
+            cur.execute("DELETE FROM habitacion WHERE id = ?", (habitacion_id,))
+            conn.commit()
+            
+        elif action_type == "Editar":
+            habitacion_id = request.form.get("HabitacionID")
+            nuevo_numero = request.form.get("NuevoNumero")
+            nueva_disponibilidad = request.form.get("NuevaDisponibilidad") == "True"
+            nuevo_costo = request.form.get("NuevoCosto")
+            cur.execute(
+                "UPDATE habitacion SET numero = ?, disponibilidad = ?, costo_dia = ? WHERE id = ?",
+                (nuevo_numero, nueva_disponibilidad, nuevo_costo, habitacion_id)
+            )
+            conn.commit()
+    
+@app.route("/cart")
+def carrito():
+    if "user_id" not in session:
+        return redirect("/login")
+    
+    huesped_id = session["user_id"]
+    return render_template("carrito.html")
 
-
-
+@app.route("/cart/add", methods=["POST"])
+def agregar_carrito():
+    if "user_id" not in session:
+        return redirect("/login")
+    
+    huesped_id = session["user_id"]
+    habitacion_id = request.form.get("habitacion_id")
+    paquete_id = request.form.get("paquete_id")
+    cantidad = request.form.get("cantidad", 1)
+    
+    # Agregar al carrito
+    cur.execute('''
+        INSERT INTO carrito (huesped_id, habitacion_id, paquete_id, cantidad)
+        VALUES (?, ?, ?, ?)
+    ''', (huesped_id, habitacion_id, paquete_id, cantidad))
+    conn.commit()
+    #ola tia adilia
+    return redirect("/cart")
+#llamen a Dios
 if __name__ == "__main__":
     app.run(debug=True)
