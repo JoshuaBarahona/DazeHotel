@@ -22,6 +22,10 @@ def index():
     # correo: adiliamoreno@gmail.com  contraseña: admin
     # cur.execute("INSERT INTO empleados(nombre, area_id, correo, telefono, cedula, hash) VALUES ('admin', 1, 'adiliamoreno@gmail.com', 12345678, 12345678, ?)", (generate_password_hash("admin"),))
     # conn.commit()
+
+    # cur.execute("INSERT INTO categorias(nombre, descripcion) VALUES('Estandar', 'Habitaciones sencillas con lo básico')")
+    # conn.commit()
+
     return render_template("index.html")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -119,12 +123,13 @@ def habitacionesdetalles(categoria_id):
     
 @app.route("/admin", methods = ["GET", "POST"])
 def admin():
+    print(request.method)
     if request.method == "GET":
-        cur.execute("SELECT * FROM reserva WHERE id = ? AND date = ? AND costo = ? AND huesped_id = ?")
+        cur.execute("SELECT * FROM reserva")
         cur.fetchall()
-        cur.execute("SELECT * FROM huesped WHERE id = ? AND nombre = ? AND cedula = ? AND telefono = ? AND correo = ? AND hash = ?")
+        cur.execute("SELECT * FROM huesped")
         cur.fetchall()
-        cur.execute("SELECT * FROM habitacion WHERE id = ? AND numero = ? AND piso = ? AND cant_max_huespedes = ? AND disponibilidad = ? AND costo_dia = ? AND detalle = ? AND categoria_id = ?")
+        cur.execute("SELECT * FROM habitacion")
         cur.fetchall()
         return render_template("admin.html")
     else:
@@ -137,15 +142,36 @@ def admin():
             huesped_id = request.get.form("id del huesped")
             cur.execute("INSERT * INTO reserva (id, date, costo, huesped_id) VALUES (?, ?, ?, ?)", Cliente, Habitacion, Fecha, Costo, huesped_id)#insert
             conn.commit()
-        elif action_type == "Nueva habitación":
-            aydi = request.form.get("ID habitación")
-            numero = request.form.get("numero de habitacion")
-            piso = request.form.get("numero de piso")
-            cantmaxhuespedes = request.form.get("capacidad máxima de personas")
-            disponibilidad = request.form.get("¿Disponible?")
-            costonoche = request.form.get("Costo habitación")
-            cur.execute("INSERT INTO habitacion (id, numero, piso, cant_max_huespedes, disponibilidad, costo_dia) VALUES (?, ?, ?, ?, ?, ?)", aydi, numero, piso, cantmaxhuespedes, disponibilidad, costonoche)#inset
-            conn.commit()
+        elif action_type == "Crear habitación":
+            try:
+                numero = request.form.get("numero")
+                piso = request.form.get("piso")
+                categoria_map = {"Estandar": 1, "Deluxe": 2}
+                categoria_id = categoria_map.get(request.form.get("categoria"))
+                cantmaxhuespedes = int(request.form.get("capacidad"))
+                disponibilidad = int(request.form.get("disponibilidad"))
+                costonoche = float(request.form.get("costo"))
+                detalle = request.form.get("detalle")
+
+                # Validar datos antes de insertar
+                if not all([numero, piso, categoria_id, cantmaxhuespedes, disponibilidad, costonoche, detalle]):
+                    return "Error: Datos incompletos", 400
+
+                # Inserción en la base de datos
+                cur.execute(
+                    """
+                    INSERT INTO habitacion (numero, piso, cant_max_huespedes, disponibilidad, costo_dia, categoria_id, detalle)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)
+                    """,
+                    (numero, piso, cantmaxhuespedes, disponibilidad, costonoche, categoria_id, detalle)
+                )
+                conn.commit()
+                return "Habitación creada exitosamente", 200
+            except Exception as e:
+                conn.rollback()
+                print("Error al crear habitación:", e)
+                return "Error interno del servidor", 500
+
         elif action_type == "Eliminar":
             habitacion_id = request.form.get("HabitacionID")
             cur.execute("DELETE FROM habitacion WHERE id = ?", (habitacion_id,))

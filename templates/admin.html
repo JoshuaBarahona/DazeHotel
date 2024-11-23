@@ -97,22 +97,36 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 id="habitacion-modal-titulo">Nueva Habitación</h2>
-            <form id="habitacion-form">
+            <form id="habitacion-form" action="/admin" method="post">
                 <label for="habitacion-numero">Número:</label>
-                <input type="number" id="habitacion-numero" required>
-                <label for="habitacion-tipo">Tipo:</label>
-                <input type="text" id="habitacion-tipo" required>
-                <label for="habitacion-capacidad">Capacidad:</label>
-                <input type="number" id="habitacion-capacidad" required>
-                <label for="habitacion-estado">Estado:</label>
-                <select id="habitacion-estado" required>
-                    <option value="Disponible">Disponible</option>
-                    <option value="Ocupada">Ocupada</option>
-                    <option value="Mantenimiento">Mantenimiento</option>
+                <input type="number" id="habitacion-numero" name="numero" required>
+
+                <label for="habitacion-tipo">Categoría:</label>
+                <select id="habitacion-tipo" name="categoria" required>
+                    <option value="Estandar">Estandar</option>
+                    <option value="Deluxe">Deluxe</option>
                 </select>
+
+                <label for="habitacion-piso">Piso:</label>
+                <input type="text" name="piso" required>
+
+                <label for="habitacion-capacidad">Capacidad:</label>
+                <input type="number" id="habitacion-capacidad" name="capacidad" min="1" required>
+
+                <label for="habitacion-estado">Estado:</label>
+                <select id="habitacion-estado" name="disponibilidad" required>
+                    <option value="0">Disponible</option>
+                    <option value="1">Ocupada</option>
+                </select>
+
+                <label for="habitacion-detalle">Detalle:</label>
+                <input type="text"  name="detalle"  required>
+
                 <label for="habitacion-precio">Precio por noche:</label>
-                <input type="number" id="habitacion-precio" required>
-                <button type="submit">Guardar</button>
+                <input type="number" id="habitacion-precio" name="costo" required>
+                
+                <input type="hidden" name="action_type" value="Crear habitación">
+                <input type="submit" value="Crear habitación">
             </form>
         </div>
     </div>
