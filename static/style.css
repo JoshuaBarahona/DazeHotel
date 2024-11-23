@@ -3,7 +3,6 @@ margin: 0;
 padding: 0;
 align-items: center;
 justify-content: center;
-display: flex;
 background: #213A58;
 
 height: 100vh;
@@ -108,6 +107,7 @@ input[type="submit"]{
     background: #213A58;
     border-radius: 25px;
     font-size: 18px;
+    
     color: white;
     cursor: pointer;
     outline: none;
@@ -132,4 +132,8 @@ input[type="submit"]:hover{
 
 .registrarse a:hover{
     text-decoration: underline;
+}
+
+button{
+    margin-top: 10px;
 }

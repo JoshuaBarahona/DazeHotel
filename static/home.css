@@ -6,6 +6,7 @@
 
 body {
     font-family: 'open sans';
+    
 }
 
 .contenedor {
@@ -24,6 +25,7 @@ body {
 }
 
 /* Header */
+
 
 header {
     width: 100%;
@@ -401,8 +403,14 @@ footer{
 
     /* Footer */
 
+    .si{
+        position: absolute;
+        bottom: 0px;
+    }
+
     .contenedor-footer{
         flex-direction: column;
+        
         border: none;
     }
 
