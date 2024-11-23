@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask, render_template, request, session, redirect
-from werkzeug.security import check_password_hash, generate_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash 
 from flask_session import Session
 
 conn = sqlite3.connect('dazeHotel.db', check_same_thread=False)
